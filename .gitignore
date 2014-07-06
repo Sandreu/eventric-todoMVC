@@ -4,9 +4,12 @@ node_modules/
 # Bower stuff.
 bower_components/
 
+build/
+
 # OS or Editor folders
 .DS_Store
 /.idea
 *.tmproj
 *.floo
+*.flooignore
 *.sublime-project

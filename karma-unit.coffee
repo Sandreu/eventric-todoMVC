@@ -1,9 +1,10 @@
 # Karma configuration
 karmaFiles = [
-  'bower_components/angular/angular.js'
-  'bower_components/angular-animate/angular-animate.js'
+  'build/vendor.js'
+
   'bower_components/angular-mocks/angular-mocks.js'
   'bower_components/chai/chai.js'
+
 
   'src/**/*.coffee'
   'src/**/*.spec.coffee'

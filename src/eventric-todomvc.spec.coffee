@@ -1,15 +1,4 @@
 describe 'eventric-todoMVC', ->
-  mockTodos = [
-    {
-      title: "Create a TodoMVC template"
-      completed: true
-    }
-    {
-      title: "Rule the Web"
-      completed: false
-    }
-  ]
-
   beforeEach angular.mock.module 'eventricTodoMVC'
 
   $scope = null
@@ -18,7 +7,6 @@ describe 'eventric-todoMVC', ->
     $rootScope    = _$rootScope_
     $controller   = _$controller_
     $scope = $rootScope.$new()
-    $scope.todos = mockTodos
     controller = $controller 'EventricTodoMVCCtrl', $scope: $scope
 
   describe '#addTodo', ->
@@ -26,11 +14,11 @@ describe 'eventric-todoMVC', ->
       newTodoTitle = "Added Todo"
       $scope.newTodo = newTodoTitle
       $scope.addTodo()
-      expect($scope.todos.length).to.equal 3
-      expect($scope.todos[2].title).to.equal newTodoTitle
-      expect($scope.todos[2].completed).not.to.be
+      expect($scope.todos.length).to.equal 1
+      expect($scope.todos[0].title).to.equal newTodoTitle
+      expect($scope.todos[0].completed).not.to.be
 
   describe '#removeTodo', ->
     it 'should remove a todo from todos list at given index',  ->
-      $scope.removeTodo 1
-      expect($scope.todos.length).to.equal 1
+      $scope.removeTodo 0
+      expect($scope.todos.length).to.equal 0
