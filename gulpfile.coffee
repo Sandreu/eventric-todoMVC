@@ -5,6 +5,7 @@ compile     = require "gulp-compile-js"
 karma       = require 'gulp-karma'
 chalk       = require "chalk"
 path        = require "path"
+commonjs    = require 'gulp-wrap-commonjs'
 
 bowerPkg    = require "./bower.json"
 
@@ -57,12 +58,11 @@ getVendorSources = (minified = false)->
   sources.push "./node_modules/eventric/build/release/eventric.js"
   sources
 
+gulp.task "scripts", ["angularScripts", "eventricScripts"]
 
-gulp.task "scripts", ->
+gulp.task "angularScripts", ->
   sources =[
-    "!./src/**/*.spec.coffee"
-    "!./src/demo.coffee"
-    "./src/**/*.coffee"
+    "./src/angular/**/*.coffee"
   ]
   gulp.src(sources)
   .pipe(
@@ -70,22 +70,29 @@ gulp.task "scripts", ->
       coffee:
         bare: true
   )
-  .pipe(plugins.concat("eventric-todomvc.js"))
-  .pipe gulp.dest("./build")
+  .pipe plugins.concat("todomvc.js")
+  .pipe gulp.dest("./build/angular")
   return
 
-gulp.task "demoScripts", ->
+gulp.task "eventricScripts", ->
   sources =[
-    "./src/demo.coffee"
+    "./src/eventric/**/*.coffee"
   ]
   gulp.src(sources)
   .pipe(
-      compile
-        coffee:
-          bare: true
-    )
-  .pipe gulp.dest("./demo/js")
+    compile
+      coffee:
+        bare: true
+  )
+  .pipe commonjs
+          pathModifier: (path) ->
+            path = path.replace /.js$/, ''
+            path = path.replace /.*src\//, 'src/'
+            path
+
+  .pipe gulp.dest("./build/eventric")
   return
+
 
 gulp.task "vendorJS", ->
   sources = getVendorSources()
@@ -106,37 +113,15 @@ gulp.task "watch", ->
   sources = [
     "./src/**/*.coffee"
   ]
-  watcher = gulp.watch sources, ["scripts", "demoScripts", "karma-unit"]
+  watcher = gulp.watch sources, ["scripts"]
   watcher.on 'change', (event) ->
     server.notify event
   return
 
-gulp.task "watchDemoFiles", ->
-  sources = [
-    "./demo/**/*.html"
-    "./demo/**/*.css"
-  ]
-  gulp.watch sources, (event) ->
-    console.log event
-    server.notify event
-  return
-
-gulp.task "karma-unit", ->
-  gulp.src('./idontexist')
-  .pipe(karma
-    configFile: './karma-unit.coffee'
-    action: 'run'
-  )
-  .on 'error', (err) ->
-
-  return
 
 gulp.task "default", [
   "scripts"
-  "demoScripts"
-  "karma-unit"
   "vendorJS"
   "livereload"
   "watch"
-  "watchDemoFiles"
 ]

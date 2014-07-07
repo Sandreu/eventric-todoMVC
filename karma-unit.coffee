@@ -6,8 +6,7 @@ karmaFiles = [
   'bower_components/chai/chai.js'
 
 
-  'src/**/*.coffee'
-  'src/**/*.spec.coffee'
+  'build/**/*.js'
 ]
 
 
