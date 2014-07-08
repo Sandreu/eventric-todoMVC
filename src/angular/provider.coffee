@@ -1,8 +1,6 @@
 todomvcModule.provider 'todomvc', [ ->
   todomvc = require 'src/eventric/todomvc'
 
-
-
   $get: ["$rootScope", ($rootScope) ->
     completeTodo: (id) ->
       todomvc.command
@@ -37,7 +35,8 @@ todomvcModule.provider 'todomvc', [ ->
         $rootScope.$apply()
 
     getTodos: ->
-      todoProjection = todomvc.getReadModel 'Todos'
+      todoProjection = todomvc.getProjection 'Todos'
+
       todoProjection.todos
   ]
 

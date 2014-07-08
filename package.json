@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "eventric-todoMVC.js",
   "dependencies": {
-    "eventric": "0.0.48"
+    "eventric": "0.0.50"
   },
   "devDependencies": {
     "chai": "*",

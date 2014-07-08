@@ -1,35 +1,35 @@
 module.exports =
 
-  AddTodo: (params, callback) ->
-    @$aggregate.create
-      name: 'Todo'
-      props: params
-    .then (todoId) ->
-      callback null, todoId
+  AddTodo: (params, done) ->
+    @$repository('Todo').create params
+    .then (todoId) =>
+      return @$repository('Todo').save todoId
+    .then =>
+      done()
 
 
-  RemoveTodo: (params, callback) ->
-    @$aggregate.command
-      name: 'Todo'
-      id: params.id
-      methodName: 'remove'
-    .then ->
-      callback null, null
+  RemoveTodo: (params, done) ->
+    @$repository('Todo').findById params.id
+    .then (todo) =>
+      todo.remove()
+      @$repository('Todo').save params.id
+    .then =>
+      done()
 
 
-  CompleteTodo: (params, callback) ->
-    @$aggregate.command
-      name: 'Todo'
-      id: params.id
-      methodName: 'complete'
-    .then ->
-      callback null, null
+  CompleteTodo: (params, done) ->
+    @$repository('Todo').findById params.id
+    .then (todo) =>
+      todo.complete()
+      @$repository('Todo').save params.id
+    .then =>
+      done()
 
 
-  IncompleteTodo: (params, callback) ->
-    @$aggregate.command
-      name: 'Todo'
-      id: params.id
-      methodName: 'incomplete'
-    .then ->
-      callback null, null
+  IncompleteTodo: (params, done) ->
+    @$repository('Todo').findById params.id
+    .then (todo) =>
+      todo.incomplete()
+      @$repository('Todo').save params.id
+    .then =>
+      done()

@@ -11,11 +11,3 @@ module.exports = ->
 
   incomplete: ->
     @$emitDomainEvent 'TodoNotCompleted'
-
-  handleTodoAdded: ->
-
-  handleTodoRemoved: ->
-
-  handleTodoCompleted: ->
-
-  handleTodoNotCompleted: ->

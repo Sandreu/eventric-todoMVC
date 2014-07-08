@@ -1,13 +1,6 @@
 module.exports = ->
   todos: []
 
-  subscribeToDomainEvents: [
-    'TodoAdded'
-    'TodoRemoved'
-    'TodoCompleted'
-    'TodoNotCompleted'
-  ]
-
   handleTodoCompleted: (domainEvent) ->
     @todos.map (todo) ->
       if todo.id == domainEvent.aggregate.id

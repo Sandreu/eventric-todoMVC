@@ -12,7 +12,7 @@ todomvc = eventric.boundedContext 'todomvc'
   .addDomainEvents require './domain/events'
   .addAggregate 'Todo', require './domain/todo'
   .addCommandHandlers require './application/commandhandlers'
-  .addReadModel 'Todos', require './domain/todos_projection'
+  .addProjection 'Todos', require './domain/todos_projection'
   .initialize()
 
 
