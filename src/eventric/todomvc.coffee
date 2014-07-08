@@ -6,7 +6,7 @@ _loadTodoMVC = ->
     .addAggregate 'Todo', require './domain/todo'
     .addCommandHandlers require './application/commandhandlers'
     .addProjection 'Todos', require './domain/todos_projection'
-    .initialize()
+    .addProjection 'TodoStats', require './domain/todo_stats_projection'
 
 
 if typeof window isnt 'undefined'
