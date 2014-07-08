@@ -10,6 +10,7 @@
     "chalk": "*",
     "coffee-script": "*",
     "connect-livereload": "*",
+    "eventric-store-mongodb": "0.0.11",
     "express": "*",
     "gulp": "*",
     "gulp-angular-templatecache": "*",

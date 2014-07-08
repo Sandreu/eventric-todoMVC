@@ -24,7 +24,7 @@ server =
     app.listen server.port
 
     app.get '/', (req, res) ->
-      res.redirect 'demo/'
+      res.redirect 'public/'
 
     console.log chalk.cyan("Express started: #{server.port}")
     server.started = true
