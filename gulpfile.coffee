@@ -55,6 +55,7 @@ getVendorSources = (minified = false)->
     fileName += '.min' if minified
     sources.push "./bower_components/#{packageName}/**/*#{fileName}.js"
 
+  sources.push './bower_components/simpleStorage/simpleStorage.js'
   sources.push "./node_modules/eventric/build/release/eventric.js"
   sources
 

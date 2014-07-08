@@ -1,6 +1,6 @@
 eventric = require 'eventric'
 
-eventric.set 'store', require './eventric-store-inmemory'
+eventric.set 'store', require 'src/eventric/eventric-store-localstorage'
 
 #eventricStoreMongoDb = require 'eventric-store-mongodb'
 #eventricStoreMongoDb.initialize ->

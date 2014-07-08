@@ -36,8 +36,10 @@ todomvcModule.provider 'todomvc', [ ->
 
     getTodos: ->
       todoProjection = todomvc.getProjection 'Todos'
-
       todoProjection.todos
+
+    getEventBus: ->
+      todomvc.getEventBus()
   ]
 
 ]

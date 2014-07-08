@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "angular-mocks": "*",
-    "chai": "*"
+    "chai": "*",
+    "simpleStorage": "~0.1.2"
   }
 }

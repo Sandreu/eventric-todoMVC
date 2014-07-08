@@ -6,8 +6,17 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     $scope.status = ''
     $scope.todos = []
 
-    todomvc.addTodo 'Create a TodoMVC template'
-    todomvc.addTodo 'Rule the web'
+    keys = simpleStorage.index()
+
+    if keys.length is 0
+      todomvc.addTodo 'Create a TodoMVC template'
+      todomvc.addTodo 'Rule the web'
+
+    else
+      eventbus = todomvc.getEventBus()
+      for key in keys
+        domainEvent = simpleStorage.get key
+        eventbus.publishDomainEvent domainEvent
 
 
     $scope.addTodo = ->
