@@ -23,14 +23,21 @@ todomvcModule.provider 'todomvc', [ ->
         name: 'AddTodo'
         params:
           title: title
-      .then ->
-        $rootScope.$apply()
 
     removeTodo: (id) ->
       todomvc.command
         name: 'RemoveTodo'
         params:
           id: id
+      .then ->
+        $rootScope.$apply()
+
+    changeTodoTitle: (id, title) ->
+      todomvc.command
+        name: 'ChangeTodoTitle'
+        params:
+          id: id
+          title: title
       .then ->
         $rootScope.$apply()
 

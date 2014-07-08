@@ -11,3 +11,6 @@ module.exports = ->
 
   incomplete: ->
     @$emitDomainEvent 'TodoNotCompleted'
+
+  changeTitle: (title) ->
+    @$emitDomainEvent 'TodoTitleChanged', title: title

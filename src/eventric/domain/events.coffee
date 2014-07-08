@@ -15,3 +15,7 @@ module.exports =
 
   TodoNotCompleted: ->
     @completed = false
+
+
+  TodoTitleChanged: (params) ->
+    @title = params.title

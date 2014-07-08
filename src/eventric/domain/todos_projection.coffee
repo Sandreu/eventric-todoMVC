@@ -1,6 +1,15 @@
 module.exports = ->
   todos: []
 
+  handleTodoAdded: (domainEvent) ->
+    todo =
+      id: domainEvent.aggregate.id
+      title: domainEvent.payload.title
+      completed: domainEvent.payload.completed
+
+    @todos.push todo
+
+
   handleTodoCompleted: (domainEvent) ->
     @todos.map (todo) ->
       if todo.id == domainEvent.aggregate.id
@@ -18,10 +27,7 @@ module.exports = ->
         todo.completed = false
 
 
-  handleTodoAdded: (domainEvent) ->
-    todo =
-      id: domainEvent.aggregate.id
-      title: domainEvent.payload.title
-      completed: domainEvent.payload.completed
-
-    @todos.push todo
+  handleTodoTitleChanged: (domainEvent) ->
+    @todos.map (todo) ->
+      if todo.id == domainEvent.aggregate.id
+        todo.title = domainEvent.payload.title

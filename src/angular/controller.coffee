@@ -9,10 +9,17 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     keys = simpleStorage.index()
 
     if keys.length is 0
+      # initial
       todomvc.addTodo 'Create a TodoMVC template'
+      .then (todoId) =>
+        todomvc.completeTodo todoId
+        $scope.$apply()
       todomvc.addTodo 'Rule the web'
+      .then (todoId) =>
+        $scope.$apply()
 
     else
+      # loading from localstorage
       eventbus = todomvc.getEventBus()
       for key in keys
         domainEvent = simpleStorage.get key
@@ -21,6 +28,9 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
 
     $scope.addTodo = ->
       todomvc.addTodo $scope.newTodo
+      .then =>
+        $scope.$apply()
+
       $scope.newTodo = ''
 
     $scope.setCompleteStatus = (todo) ->
