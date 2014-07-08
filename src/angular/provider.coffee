@@ -47,6 +47,10 @@ todomvcModule.provider 'todomvc', [ ->
 
     getEventBus: ->
       todomvc.getEventBus()
+
+    getStore: ->
+      todomvc.getStore()
+
   ]
 
 ]

@@ -56,6 +56,7 @@ getVendorSources = (minified = false)->
     sources.push "./bower_components/#{packageName}/**/*#{fileName}.js"
 
   sources.push './bower_components/simpleStorage/simpleStorage.js'
+  sources.push './bower_components/socket.io-client/socket.io.js'
   sources.push "./node_modules/eventric/build/release/eventric.js"
   sources
 

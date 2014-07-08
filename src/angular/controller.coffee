@@ -6,24 +6,24 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     $scope.status = ''
     $scope.todos = []
 
-    keys = simpleStorage.index()
+    todomvc.getStore().find 'todomvc.events', {}, (err, result) ->
+      if result.length is 0
+        # initial
+        todomvc.addTodo 'Create a TodoMVC template'
+        .then (todoId) =>
+          console.log 'saved', todoId
+          todomvc.completeTodo todoId
+          $scope.$apply()
+        todomvc.addTodo 'Rule the web'
+        .then (todoId) =>
+          $scope.$apply()
 
-    if keys.length is 0
-      # initial
-      todomvc.addTodo 'Create a TodoMVC template'
-      .then (todoId) =>
-        todomvc.completeTodo todoId
-        $scope.$apply()
-      todomvc.addTodo 'Rule the web'
-      .then (todoId) =>
-        $scope.$apply()
 
-    else
-      # loading from localstorage
-      eventbus = todomvc.getEventBus()
-      for key in keys
-        domainEvent = simpleStorage.get key
-        eventbus.publishDomainEvent domainEvent
+      else
+        eventbus = todomvc.getEventBus()
+        result.map (domainEvent) =>
+          eventbus.publishDomainEvent domainEvent
+          $scope.$apply()
 
 
     $scope.addTodo = ->
@@ -50,7 +50,6 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     $scope.$watch ->
       todomvc.getTodos()
     , (todos) ->
-      console.log 'todos', todos
       $scope.todos = angular.copy todos
 
       remaining = $filter('filter')($scope.todos, completed: false)
