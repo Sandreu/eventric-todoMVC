@@ -1,10 +1,10 @@
 eventric = require 'eventric'
 
-#eventric.set 'store', require './eventric-store-inmemory'
+eventric.set 'store', require './eventric-store-inmemory'
 
-eventricStoreMongoDb = require 'eventric-store-mongodb'
-eventricStoreMongoDb.initialize ->
-  eventric.set 'store', eventricStoreMongoDb
+#eventricStoreMongoDb = require 'eventric-store-mongodb'
+#eventricStoreMongoDb.initialize ->
+#  eventric.set 'store', eventricStoreMongoDb
 
 
 todomvc = eventric.boundedContext 'todomvc'
