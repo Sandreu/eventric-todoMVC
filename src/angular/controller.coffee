@@ -6,24 +6,35 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     $scope.status = ''
     $scope.todos = []
 
-    todomvc.getStore().find 'todomvc.events', {}, (err, result) ->
-      if result.length is 0
-        # initial
-        todomvc.addTodo 'Create a TodoMVC template'
-        .then (todoId) =>
-          console.log 'saved', todoId
-          todomvc.completeTodo todoId
-          $scope.$apply()
-        todomvc.addTodo 'Rule the web'
-        .then (todoId) =>
-          $scope.$apply()
+    todomvc.getBoundedContext().initialize =>
+
+      todomvc.getStore().find 'todomvc.events', {}, (err, result) ->
+        if result.length is 0
+          # initial
+          todomvc.addTodo 'Create a TodoMVC template'
+          .then (todoId) =>
+            console.log 'saved', todoId
+            todomvc.completeTodo todoId
+            $scope.$apply()
+          todomvc.addTodo 'Rule the web'
+          .then (todoId) =>
+            $scope.$apply()
 
 
-      else
-        eventbus = todomvc.getEventBus()
-        result.map (domainEvent) =>
-          eventbus.publishDomainEvent domainEvent
-          $scope.$apply()
+      $scope.$watch ->
+        todomvc.getTodos()
+      , (todos) ->
+        $scope.todos = angular.copy todos
+
+        remaining = $filter('filter')($scope.todos, completed: false)
+        $scope.remainingCount = remaining.length
+        $scope.completedCount = $scope.todos.length - $scope.remainingCount
+      , true
+
+      $timeout =>
+        $scope.$apply
+
+
 
 
     $scope.addTodo = ->
@@ -45,17 +56,6 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     $scope.clearCompleted = ->
       for todo in $filter('filter')($scope.todos, completed: true)
         todomvc.removeTodo todo.id
-
-
-    $scope.$watch ->
-      todomvc.getTodos()
-    , (todos) ->
-      $scope.todos = angular.copy todos
-
-      remaining = $filter('filter')($scope.todos, completed: false)
-      $scope.remainingCount = remaining.length
-      $scope.completedCount = $scope.todos.length - $scope.remainingCount
-    , true
 
     @
 ]

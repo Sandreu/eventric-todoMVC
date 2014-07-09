@@ -7,10 +7,11 @@ module.exports = (_loadTodoMVC) -> new Promise (resolve, reject) ->
 
     todomvc = _loadTodoMVC()
 
+    console.log 'registered global domain event handler'
     eventric.addDomainEventHandler (domainEvent) ->
       process.nextTick =>
-        console.log todomvc.getProjection('TodoStats').stats
+        console.log 'wat', todomvc.getProjection('TodoStats').stats
 
     require('./eventric-remote-store')(todomvc)
 
-    resolve todomvc.initialize()
+    resolve todomvc

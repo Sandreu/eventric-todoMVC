@@ -3,7 +3,7 @@ class RemoteStoreClient
   constructor: ->
     @_callbacks = {}
 
-    @socket = io('http://localhost:3000')
+    @socket = io(window.location.hostname + ':3000')
 
   save: (collectionName, doc, callback) ->
     guid = eventric.generateUid()
@@ -23,7 +23,7 @@ class RemoteStoreClient
 
     console.log 'trying remote find', guid
     @socket.on "RemoteStore:find:#{guid}", (data) =>
-      console.log 'received find result', data.result
+      console.log 'received find result'
       callback null, data.result
 
     @socket.emit 'RemoteStore:find',
@@ -34,7 +34,9 @@ class RemoteStoreClient
 
 
   collection: (collectionName, callback) ->
-    callback null, []
+    callback null,
+      remove: (callback) ->
+        callback()
 
 
 module.exports = new RemoteStoreClient

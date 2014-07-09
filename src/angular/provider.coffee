@@ -51,6 +51,9 @@ todomvcModule.provider 'todomvc', [ ->
     getStore: ->
       todomvc.getStore()
 
+    getBoundedContext: ->
+      todomvc
+
   ]
 
 ]
