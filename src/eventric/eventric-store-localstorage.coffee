@@ -22,7 +22,9 @@ localstorageStore =
     callback null, events
 
   collection: (collectionName, callback) ->
-    callback null, []
+    callback null,
+      remove: (callback) ->
+        callback()
 
 
 module.exports = localstorageStore
