@@ -7,16 +7,19 @@ localstorageStore =
     callback null, doc
 
   find: ([collectionName, query, projection]..., callback) ->
-    aggregateId = query['aggregate.id']
-    console.log aggregateId
     events = []
     keys = simpleStorage.index()
 
-    for key in keys
-      if aggregateId is key.split('.').pop()
-        console.log 'wat', id
+    if query['aggregate.id']
+      aggregateId = query['aggregate.id']
+
+      for key in keys
+        if aggregateId is key.split('.').pop()
+          events.push simpleStorage.get key
+
+    else
+      for key in keys
         events.push simpleStorage.get key
-        console.log 'wat', events
 
 
     callback null, events
