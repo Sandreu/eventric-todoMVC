@@ -5,6 +5,7 @@ class RemoteStoreClient
 
     @socket = io(window.location.hostname + ':3000')
 
+
   save: (collectionName, doc, callback) ->
     guid = eventric.generateUid()
 

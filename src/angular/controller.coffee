@@ -7,8 +7,14 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     $scope.todos = []
 
     todomvc.getBoundedContext().initialize =>
+      store = todomvc.getStore()
 
-      todomvc.getStore().find 'todomvc.events', {}, (err, result) ->
+      if store.socket
+        store.socket.on 'DomainEvent', (domainEvent) ->
+          todomvc.getEventBus().publishDomainEvent domainEvent
+          $scope.$apply()
+
+      store.find 'todomvc.events', {}, (err, result) ->
         if result.length is 0
           # initial
           todomvc.addTodo 'Create a TodoMVC template'
