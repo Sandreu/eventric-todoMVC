@@ -8,12 +8,20 @@ inMemoryStore =
     callback null, doc
 
   find: ([collectionName, query, projection]..., callback) ->
-    aggregateId = query['aggregate.id']
+    events = []
+    @_events[collectionName] ?= []
 
-    events = @_events[collectionName].filter (event) ->
-      event.aggregate.id == aggregateId
+    if query['aggregate.id']
+      aggregateId = query['aggregate.id']
+
+      events = @_events[collectionName].filter (event) ->
+        event.aggregate.id == aggregateId
+
+    else
+      events = @_events[collectionName]
 
     callback null, events
+
 
   collection: (collectionName, callback) ->
     callback null,

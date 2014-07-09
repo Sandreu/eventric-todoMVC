@@ -21,7 +21,6 @@ localstorageStore =
       for key in keys
         events.push simpleStorage.get key
 
-
     callback null, events
 
   collection: (collectionName, callback) ->
