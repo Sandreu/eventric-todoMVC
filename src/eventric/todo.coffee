@@ -1,7 +1,8 @@
 module.exports = ->
 
-  create: (params) ->
-    @$emitDomainEvent 'TodoAdded', title: params.title
+  create: (title, done) ->
+    @$emitDomainEvent 'TodoAdded', title: title
+    done()
 
   remove: ->
     @$emitDomainEvent 'TodoRemoved'

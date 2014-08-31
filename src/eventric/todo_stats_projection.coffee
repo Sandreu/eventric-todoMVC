@@ -1,5 +1,7 @@
 module.exports = ->
 
+  stores: ['inmemory']
+
   handleTodoAdded: (domainEvent) ->
     @stats ?= {}
     @stats.added ?= 0

@@ -1,7 +1,7 @@
 module.exports =
 
   AddTodo: (params, done) ->
-    @$repository('Todo').create params
+    @$repository('Todo').create params.title
     .then (todoId) =>
       @$repository('Todo').save todoId, =>
         done null, todoId

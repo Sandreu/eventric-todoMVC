@@ -6,62 +6,65 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     $scope.status = ''
     $scope.todos = []
 
-    todomvc.getBoundedContext().initialize =>
-      store = todomvc.getStore()
 
-      if store.socket
-        store.socket.on 'DomainEvent', (domainEvent) ->
-          todomvc.getEventBus().publishDomainEvent domainEvent
+    todomvc.initialize =>
+
+      todomvc.subscribeToAllDomainEvents ->
+        $timeout ->
           $scope.$apply()
+        , 100
 
-      store.find 'todomvc.events', {}, (err, result) ->
-        if result.length is 0
-          # initial
-          todomvc.addTodo 'Create a TodoMVC template'
-          .then (todoId) =>
-            console.log 'saved', todoId
-            todomvc.completeTodo todoId
+      todomvc.getDomainEventsStore().findAllDomainEvents (err, result) ->
+        if result.length > 0
+          return
+
+        # Create initial todos if there are no todos in the store
+        todomvc.command 'AddTodo', title: 'Create a TodoMVC template'
+        .then (todoId) ->
+          todomvc.command 'CompleteTodo', id: todoId
+        .then ->
+          todomvc.command 'AddTodo', title: 'Rule the web'
+        .then ->
+          # TODO: use changed event from projection instead of timeout
+          $timeout ->
             $scope.$apply()
-          todomvc.addTodo 'Rule the web'
-          .then (todoId) =>
-            $scope.$apply()
+          , 100
 
 
+      # TODO: use changed event from projection instead of this hackery
       $scope.$watch ->
-        todomvc.getTodos()
+        todomvc.getProjection('Todos').todos
       , (todos) ->
         $scope.todos = angular.copy todos
 
         remaining = $filter('filter')($scope.todos, completed: false)
         $scope.remainingCount = remaining.length
         $scope.completedCount = $scope.todos.length - $scope.remainingCount
-      , true
 
-      $timeout =>
-        $scope.$apply
-
+        $timeout ->
+          $scope.$apply()
 
 
 
     $scope.addTodo = ->
-      todomvc.addTodo $scope.newTodo
-      .then =>
+      todomvc.command 'AddTodo', title: $scope.newTodo
+      .then ->
         $scope.$apply()
 
       $scope.newTodo = ''
 
     $scope.setCompleteStatus = (todo) ->
       if todo.completed
-        todomvc.completeTodo todo.id
+        todomvc.command 'CompleteTodo', id: todo.id
       else
-        todomvc.incompleteTodo todo.id
+        todomvc.command 'IncompleteTodo', id: todo.id
 
     $scope.removeTodo = (todo) ->
-      todomvc.removeTodo todo.id
+      todomvc.command 'RemoveTodo', id: todo.id
 
     $scope.clearCompleted = ->
       for todo in $filter('filter')($scope.todos, completed: true)
-        todomvc.removeTodo todo.id
+        todomvc.command 'RemoveTodo', id: todo.id
 
     @
 ]

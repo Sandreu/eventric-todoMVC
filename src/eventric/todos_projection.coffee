@@ -1,4 +1,5 @@
 module.exports = ->
+  stores: ['inmemory']
   todos: []
 
   handleTodoAdded: (domainEvent) ->
