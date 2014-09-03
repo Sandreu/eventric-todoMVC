@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "eventric-todoMVC.js",
   "dependencies": {
-    "eventric": "0.0.102",
+    "eventric": "0.0.103",
     "eventric-remote-socketio-client": "0.0.17",
     "eventric-remote-socketio-endpoint": "0.0.21",
     "eventric-store-mongodb": "0.0.17"
