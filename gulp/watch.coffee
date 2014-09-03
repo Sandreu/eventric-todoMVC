@@ -6,7 +6,7 @@ module.exports = (gulp) ->
     sources = [
       "./src/**/*.coffee"
     ]
-    watcher = gulp.watch sources, ["scripts"]
+    watcher = gulp.watch sources, ["build"]
     watcher.on 'change', (event) ->
       server.notify event
     return

@@ -1,18 +1,19 @@
 {
   "name": "eventric-todoMVC",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "eventric-todoMVC.js",
   "dependencies": {
-    "eventric": "0.0.103",
-    "eventric-remote-socketio-client": "0.0.17",
-    "eventric-remote-socketio-endpoint": "0.0.21",
-    "eventric-store-mongodb": "0.0.17"
+    "eventric": "*",
+    "eventric-remote-socketio-client": "*",
+    "eventric-remote-socketio-endpoint": "*",
+    "eventric-store-mongodb": "*"
   },
   "devDependencies": {
     "chai": "*",
     "chalk": "*",
     "coffee-script": "*",
     "connect-livereload": "*",
+    "commonjs-require": "*",
     "express": "*",
     "gulp": "*",
     "gulp-angular-templatecache": "*",
@@ -24,7 +25,7 @@
     "gulp-load-plugins": "*",
     "gulp-mocha": "*",
     "gulp-util": "*",
-    "gulp-wrap-commonjs": "^0.1.11",
+    "gulp-wrap-commonjs": "*",
     "karma": "*",
     "karma-chai": "*",
     "karma-chrome-launcher": "*",
@@ -34,6 +35,8 @@
     "karma-sinon": "*",
     "mocha": "*",
     "sinon": "*",
-    "tiny-lr": "*"
+    "tiny-lr": "*",
+    "main-bower-files": "*",
+    "merge-stream": "*"
   }
 }

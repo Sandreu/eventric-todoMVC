@@ -14,13 +14,18 @@
   "dependencies": {
     "angular": "*",
     "angular-animate": "*",
-    "commonjs-require": "~1.4.5",
     "angular-ui-router": "~0.2.10",
-    "socket.io-client": "~1.0.6"
+    "socket.io-client": "~1.0.6",
+    "simpleStorage": "~0.1.2"
   },
   "devDependencies": {
     "angular-mocks": "*",
-    "chai": "*",
-    "simpleStorage": "~0.1.2"
+    "chai": "*"
+  },
+  "overrides": {
+    "socket.io-client": {
+      "main": "socket.io.js"
+    }
   }
+
 }

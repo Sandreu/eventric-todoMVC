@@ -3,8 +3,9 @@ module.exports =
   AddTodo: (params, done) ->
     @$repository('Todo').create params.title
     .then (todoId) =>
-      @$repository('Todo').save todoId, =>
-        done null, todoId
+      @$repository('Todo').save todoId
+    .then (todoId) ->
+      done null, todoId
 
 
   RemoveTodo: (params, done) ->
@@ -12,7 +13,7 @@ module.exports =
     .then (todo) =>
       todo.remove()
       @$repository('Todo').save params.id
-    .then =>
+    .then ->
       done()
 
 
@@ -21,7 +22,7 @@ module.exports =
     .then (todo) =>
       todo.complete()
       @$repository('Todo').save params.id
-    .then =>
+    .then ->
       done()
 
 
@@ -30,7 +31,7 @@ module.exports =
     .then (todo) =>
       todo.incomplete()
       @$repository('Todo').save params.id
-    .then =>
+    .then ->
       done()
 
 
@@ -39,5 +40,5 @@ module.exports =
     .then (todo) =>
       todo.changeTitle params.title
       @$repository('Todo').save params.id
-    .then =>
+    .then ->
       done()
