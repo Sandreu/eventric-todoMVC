@@ -6,7 +6,8 @@
     "eventric": "*",
     "eventric-remote-socketio-client": "*",
     "eventric-remote-socketio-endpoint": "*",
-    "eventric-store-mongodb": "*"
+    "eventric-store-mongodb": "*",
+    "eventric-store-remote": "*"
   },
   "devDependencies": {
     "chai": "*",
