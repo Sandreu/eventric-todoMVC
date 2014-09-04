@@ -28,10 +28,10 @@ First
 gulp
 ```
 
-Then change in src/eventric/todomvc_client.coffee to the `eventric-remote-store-client` and start the process
+Then change in src/eventric/index.client.coffee `remoteStore` to `true` and start the process
 
 ```
-coffee src/eventric/todomvc
+coffee src/eventric
 ```
 
 Now point your browser to `http://localhost:2342`
