@@ -14,7 +14,7 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
     require 'src/eventric'
     .then (_todomvc) ->
       todomvc = _todomvc
-      todomvc.subscribe 'projection:Todos:changed', (event) ->
+      updateScope = (event) ->
         $scope.todos = event.projection.todos
 
         remaining = $filter('filter')($scope.todos, completed: false)
@@ -23,17 +23,18 @@ todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
 
         $scope.$apply()
 
-      todomvc.initialize ->
-
-        # Create initial todos if there are no todos in the store
-        todomvc.getDomainEventsStore().findAllDomainEvents (err, result) ->
-          if result.length > 0
-            return
+      todomvc.subscribe 'projection:Todos:initialized', (event) ->
+        updateScope event
+        if event.projection.todos.length is 0
           todomvc.command 'AddTodo', title: 'Create a TodoMVC template'
           .then (todoId) ->
             todomvc.command 'CompleteTodo', id: todoId
           .then ->
             todomvc.command 'AddTodo', title: 'Rule the web'
+
+      todomvc.subscribe 'projection:Todos:changed', updateScope
+
+      todomvc.initialize()
 
 
     $scope.addTodo = ->

@@ -1,6 +1,5 @@
 {
   "name": "eventric-todomvc",
-  "main": "app.js",
   "version": "0.0.0",
   "authors": [],
   "license": "MIT",

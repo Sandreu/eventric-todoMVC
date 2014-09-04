@@ -1,5 +1,4 @@
 module.exports = ->
-  stores: ['inmemory']
   todos: []
 
   handleTodoAdded: (domainEvent) ->
@@ -7,7 +6,6 @@ module.exports = ->
       id: domainEvent.aggregate.id
       title: domainEvent.payload.title
       completed: domainEvent.payload.completed
-
     @todos.push todo
 
 
