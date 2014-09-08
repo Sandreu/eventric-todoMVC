@@ -24,7 +24,7 @@
     <ul id="todo-list">
       <!-- These are here just to show the structure of the list items -->
       <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-      <li ng-class="{completed: todo.completed}" ng-repeat="todo in todos">
+      <li ng-class="{completed: todo.completed}" ng-repeat="todo in todos | todosCompleteFilter:status">
         <div class="view" >
           <input name="test" class="toggle" ng-model="todo.completed"
                  ng-change="setCompleteStatus(todo)"
@@ -45,13 +45,13 @@
     <!-- Remove this if you don't implement routing -->
     <ul id="filters">
       <li>
-        <a ng-class="{selected: status == ''} " href="#/">All</a>
+        <a ng-class="{selected: status == ''} " href="#/" ng-click="status=''">All</a>
       </li>
       <li>
-        <a ng-class="{selected: status == 'active'} "href="#/active">Active</a>
+        <a ng-class="{selected: status == 'active'} "href="#/active" ng-click="status='active'">Active</a>
       </li>
       <li>
-        <a ng-class="{selected: status == 'completed'} " href="#/completed">Completed</a>
+        <a ng-class="{selected: status == 'completed'} " href="#/completed" ng-click="status='completed'">Completed</a>
       </li>
     </ul>
     <!-- Hidden if no completed items are left ↓ -->

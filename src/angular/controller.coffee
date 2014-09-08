@@ -4,6 +4,18 @@ todomvcModule = angular.module 'eventricTodoMVC', [
   require 'angular-ui-router'
 ]
 
+todomvcModule.filter 'todosCompleteFilter', () ->
+  (todos = [], status) ->
+    out = []
+    check_fn = (todo) ->
+      switch status
+        when 'completed' then todo.completed
+        when 'active' then !todo.completed
+        else true
+        
+    out.push todo for todo in todos when check_fn todo
+    out
+    
 todomvcModule.controller "EventricTodoMVCCtrl", ["$scope", "$filter", "$timeout"
   ($scope, $filter, $timeout) ->
     $scope.remainingCount = 0
